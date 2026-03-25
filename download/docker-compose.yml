@@ -49,7 +49,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_PATH}:/config
+      - ${ZEN_CONFIG}:/config
       - ${MANUAL_DOWNLOADS_PATH}:/downloads
     depends_on:
       gluetun:
