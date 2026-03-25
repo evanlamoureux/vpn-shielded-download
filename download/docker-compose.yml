@@ -45,14 +45,14 @@ services:
     container_name: zen
     network_mode: "service:gluetun"
     environment:
-      - FF_PREF_DOWNLOADS=browser.download.dir=\"\/Downloads\"
+      - FILE_MANAGER_PATH=/downloads
       - PIXELFLUX_WAYLAND=true
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${ZEN_CONFIG}:/config
-      - ${MANUAL_DOWNLOADS_PATH}:/Downloads
+      - ${MANUAL_DOWNLOADS_PATH}:/downloads
     depends_on:
       gluetun:
         condition: service_healthy
