@@ -10,6 +10,8 @@ services:
       - ${HTTP_PORT}:8080
       - ${TORRENT_PORT}:6881
       - ${TORRENT_PORT}:6881/udp
+      - ${ZEN_HTTP}:${ZEN_HTTP}
+      - ${ZEN_HTTPS}:${ZEN_HTTPS}
     environment:
       - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
       - VPN_TYPE=${VPN_TYPE}
@@ -36,4 +38,20 @@ services:
     depends_on:
       gluetun:
         condition: service_healthy # Wait for VPN to be ready
+    restart: unless-stopped
+
+  zen:
+    image: lscr.io/linuxserver/zen:latest
+    container_name: zen
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_PATH}:/config
+      - ${MANUAL_DOWNLOADS_PATH}:/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
     restart: unless-stopped
