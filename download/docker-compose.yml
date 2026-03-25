@@ -51,7 +51,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${ZEN_CONFIG}:/config
-      - ${MANUAL_DOWNLOADS_PATH}:/Downloads
+      - ${MANUAL_DOWNLOADS_PATH}:/downloads
     depends_on:
       gluetun:
         condition: service_healthy
