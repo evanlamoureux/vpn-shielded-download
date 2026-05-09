@@ -33,7 +33,7 @@ services:
       - TZ=${TZ}
       - WEBUI_PORT=${HTTP_PORT}
     volumes:
-      - ${CONFIG_PATH}/qBittorrent:/config/qBittorrent
+      - ${CONFIG_PATH}/qbittorrent:/config/qBittorrent
       - ${DOWNLOADS_PATH}:/downloads
     depends_on:
       gluetun:
