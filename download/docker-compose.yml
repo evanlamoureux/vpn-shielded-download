@@ -26,6 +26,177 @@ services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=${HTTP_PORT}
+    volumes:
+      - ${CONFIG_PATH}/qBittorrent:/config/qBittorrent
+      - ${DOWNLOADS_PATH}:/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stopped
+
+  zen:
+    image: lscr.io/linuxserver/zen:latest
+    container_name: zen
+    network_mode: "service:gluetun"
+    environment:
+      - PIXELFLUX_WAYLAND=true
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${ZEN_CONFIG}:/config
+      - ${MANUAL_DOWNLOADS_PATH}:/config/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stoppedservices:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - ${HTTP_PORT}:8080
+      - ${TORRENT_PORT}:6881
+      - ${TORRENT_PORT}:6881/udp
+      - ${ZEN_HTTP}:${ZEN_HTTP}
+      - ${ZEN_HTTPS}:${ZEN_HTTPS}
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_PRIVATE_KEY=${PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${VPN_ADDRESS}
+      - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
+      - FIREWALL_OUTBOUND_SUBNETS=${OUTBOUND_SUBNETS}
+      - FIREWALL_INPUT_PORTS=${HTTP_PORT}
+      - SERVER_REGIONS=${SERVER_REGIONS}
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=${HTTP_PORT}
+    volumes:
+      - ${CONFIG_PATH}/qBittorrent:/config/qBittorrent
+      - ${DOWNLOADS_PATH}:/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stopped
+
+  zen:
+    image: lscr.io/linuxserver/zen:latest
+    container_name: zen
+    network_mode: "service:gluetun"
+    environment:
+      - PIXELFLUX_WAYLAND=true
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${ZEN_CONFIG}:/config
+      - ${MANUAL_DOWNLOADS_PATH}:/config/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stoppedservices:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - ${HTTP_PORT}:8080
+      - ${TORRENT_PORT}:6881
+      - ${TORRENT_PORT}:6881/udp
+      - ${ZEN_HTTP}:${ZEN_HTTP}
+      - ${ZEN_HTTPS}:${ZEN_HTTPS}
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_PRIVATE_KEY=${PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${VPN_ADDRESS}
+      - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
+      - FIREWALL_OUTBOUND_SUBNETS=${OUTBOUND_SUBNETS}
+      - FIREWALL_INPUT_PORTS=${HTTP_PORT}
+      - SERVER_REGIONS=${SERVER_REGIONS}
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=${HTTP_PORT}
+    volumes:
+      - ${CONFIG_PATH}/qBittorrent:/config/qBittorrent
+      - ${DOWNLOADS_PATH}:/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stopped
+
+  zen:
+    image: lscr.io/linuxserver/zen:latest
+    container_name: zen
+    network_mode: "service:gluetun"
+    environment:
+      - PIXELFLUX_WAYLAND=true
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${ZEN_CONFIG}:/config
+      - ${MANUAL_DOWNLOADS_PATH}:/config/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stoppedservices:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - ${HTTP_PORT}:8080
+      - ${TORRENT_PORT}:6881
+      - ${TORRENT_PORT}:6881/udp
+      - ${ZEN_HTTP}:${ZEN_HTTP}
+      - ${ZEN_HTTPS}:${ZEN_HTTPS}
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_PRIVATE_KEY=${PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${VPN_ADDRESS}
+      - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
+      - FIREWALL_OUTBOUND_SUBNETS=${OUTBOUND_SUBNETS}
+      - FIREWALL_INPUT_PORTS=${HTTP_PORT}
+      - SERVER_REGIONS=${SERVER_REGIONS}
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
     network_mode: "service:gluetun" # Joins the VPN's network
     environment:
       - PUID=${PUID}
