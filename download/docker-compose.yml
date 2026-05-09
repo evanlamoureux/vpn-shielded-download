@@ -22,6 +22,7 @@ services:
       - FIREWALL_INPUT_PORTS=${HTTP_PORT}
       - FIREWALL_VPN_INPUT_PORTS=${VPN_PORT}
       - SERVER_REGIONS=${SERVER_REGIONS}
+      - VPN_PORT_FORWARDING=on
     restart: unless-stopped
 
   qbittorrent:
