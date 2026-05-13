@@ -19,7 +19,7 @@ services:
       - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
       - SERVER_REGIONS=${SERVER_REGIONS}
       - SERVER_CITIES=${SERVER_CITIES}
-      - FIREWALL_VPN_INPUT_PORTS=${VPN_PORT}
+
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
