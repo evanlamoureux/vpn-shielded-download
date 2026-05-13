@@ -18,7 +18,7 @@ services:
       - WIREGUARD_ADDRESSES=${VPN_ADDRESS}
       - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
       - SERVER_REGIONS=${SERVER_REGIONS}
-      - SERVER_CITIES=${SERVER_CITIES}
+      #- SERVER_CITIES=${SERVER_CITIES}
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
