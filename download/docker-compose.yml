@@ -17,9 +17,10 @@ services:
       - WIREGUARD_PRIVATE_KEY=${PRIVATE_KEY}
       - WIREGUARD_ADDRESSES=${VPN_ADDRESS}
       - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
-      #- SERVER_REGIONS=${SERVER_REGIONS}
+      - SERVER_REGIONS=${SERVER_REGIONS}
       - SERVER_CITIES=${SERVER_CITIES}
       - FIREWALL_VPN_INPUT_PORTS=${VPN_PORTS}
+      - UPDATER_PERIOD=24h
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
