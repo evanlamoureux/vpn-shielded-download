@@ -1,33 +1,24 @@
 services:
   gluetun:
     image: qmcgaw/gluetun
-    container_name: gluetun
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
-      - ${HTTP_PORT}:8080
-      - ${TORRENT_PORT}:6881
-      - ${TORRENT_PORT}:6881/udp
-      - ${ZEN_HTTP}:${ZEN_HTTP}
-      - ${ZEN_HTTPS}:${ZEN_HTTPS}
+      - 8080:8080/tcp
     environment:
-      - BLOCK_MALICIOUS=off
-      - BLOCK_SURVEILLANCE=off
-      - BLOCK_ADS=off
-      - LOG_LEVEL=debug
-      - FIREWALL_IPTABLES_LOG_LEVEL=debug
-      - VPN_SERVICE_PROVIDER=${VPN_PROVIDER}
-      - VPN_TYPE=${VPN_TYPE}
+      #To ensure that the correct user has access
+      - PUID=${PUID}
+      - PGID=${PGID}
+      # Windscribe specific Setup over WireGuard
+      - VPN_SERVICE_PROVIDER=windscribe
+      - VPN_TYPE=wireguard
       - WIREGUARD_PRIVATE_KEY=${PRIVATE_KEY}
       - WIREGUARD_ADDRESSES=${VPN_ADDRESS}
       - WIREGUARD_PRESHARED_KEY=${PRESHARED_KEY}
-      - FIREWALL_OUTBOUND_SUBNETS=${OUTBOUND_SUBNETS}
-      - FIREWALL_INPUT_PORTS=${HTTP_PORT}
-      - FIREWALL_VPN_INPUT_PORTS=${VPN_PORT}
       - SERVER_REGIONS=${SERVER_REGIONS}
-    restart: unless-stopped
+      - FIREWALL_VPN_INPUT_PORTS=${VPN_PORT}
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -37,27 +28,10 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - WEBUI_PORT=${HTTP_PORT}
+      - WEBUI_PORT=8080
     volumes:
       - ${CONFIG_PATH}:/config
       - ${DOWNLOADS_PATH}:/downloads
-    depends_on:
-      gluetun:
-        condition: service_healthy
-    restart: unless-stopped
-
-  zen:
-    image: lscr.io/linuxserver/zen:latest
-    container_name: zen
-    network_mode: "service:gluetun"
-    environment:
-      - PIXELFLUX_WAYLAND=true
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${ZEN_CONFIG}:/config
-      - ${MANUAL_DOWNLOADS_PATH}:/config/downloads
     depends_on:
       gluetun:
         condition: service_healthy
