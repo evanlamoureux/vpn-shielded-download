@@ -21,6 +21,8 @@ services:
       - SERVER_CITIES=${SERVER_CITIES}
       - FIREWALL_VPN_INPUT_PORTS=${VPN_PORTS}
       - UPDATER_PERIOD=24h
+    volumes:
+      - ${CONFIG_PATH}:/gluetun
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
