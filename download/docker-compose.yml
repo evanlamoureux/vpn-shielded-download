@@ -45,6 +45,9 @@ services:
     image: lscr.io/linuxserver/zen:latest
     environment:
       - PIXELFLUX_WAYLAND=true
+            #To ensure that the correct user has access
+      - PUID=${PUID}
+      - PGID=${PGID}
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
