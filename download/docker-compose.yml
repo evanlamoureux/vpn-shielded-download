@@ -43,8 +43,6 @@ services:
   
   zen:
     image: lscr.io/linuxserver/zen:latest
-    ports:
-      - 3001:3001/tcp
     environment:
       - PIXELFLUX_WAYLAND=true
     network_mode: "service:gluetun"
