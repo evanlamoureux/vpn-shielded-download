@@ -59,4 +59,5 @@ services:
         condition: service_healthy
     restart: unless-stopped
     volumes:
+      - ${CONFIG_PATH}:/config
       - ${DOWNLOADS_PATH}/Manual:/config/Downloads
