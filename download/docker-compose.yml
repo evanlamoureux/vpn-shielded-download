@@ -59,4 +59,4 @@ services:
         condition: service_healthy
     restart: unless-stopped
     volumes:
-      - ${DOWNLOADS_PATH}/Manual:/Downloads
+      - ${DOWNLOADS_PATH}/Manual:/downloads
