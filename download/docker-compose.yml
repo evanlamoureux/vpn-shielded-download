@@ -50,6 +50,9 @@ services:
             #To ensure that the correct user has access
       - PUID=${PUID}
       - PGID=${PGID}
+      - SELKIES_MANUAL_WIDTH=2560
+      - SELKIES_MANUAL_HEIGHT=1440
+      - MAX_RES=2560x1440
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
