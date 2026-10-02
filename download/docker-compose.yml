@@ -7,6 +7,7 @@ services:
       - /dev/net/tun:/dev/net/tun
     ports:
       - 8080:8080/tcp
+      - 3001:3001/tcp
     environment:
       #To ensure that the correct user has access
       - PUID=${PUID}
